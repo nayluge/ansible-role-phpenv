@@ -2,3 +2,4 @@
 - include: prepare.yml
 - include: install.yml
 - include: install_versions.yml
+- include: setup.yml

@@ -3,6 +3,7 @@
   shell: "PHPENV_ROOT={{ phpenv_root }} ./bin/phpenv-install.sh"
   args:
     chdir: "{{ mktemp.stdout }}"
+  ignore_errors: yes
 
 - name: create plugins directory
   file: state=directory path={{ phpenv_root }}/plugins
@@ -15,3 +16,6 @@
     depth={{ item.depth }}
     accept_hostkey=true
   with_items: phpenv_plugins
+
+
+
