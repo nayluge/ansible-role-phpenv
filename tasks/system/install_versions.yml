@@ -1,7 +1,17 @@
 ---
-- name: install versions
+
+- name: Check if the version is allready installed
+  stat: path={ phpenv_root }}/versions/{{ phpenv_global }}
+  with_items: phpenv_versions
+  register: php_not_installed
+
+- name: install missing php versions
   shell: bash -lc 'PHP_BUILD_CONFIGURE_OPTS="{{ phpbuild_configure_extras }}" phpenv install {{ item }}'
   with_items: phpenv_versions
+  with_items: php_not_installed.results
+    when:
+      - not item | skipped
+      - item.stat.exists == false
 
 - name: set php {{ phpenv_global }} as global
   shell: bash -lc "phpenv global {{ phpenv_global }} && phpenv rehash"

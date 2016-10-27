@@ -2,6 +2,9 @@
 - name: phpenv | Load the OS specific variables
   include_vars: "{{ansible_distribution | lower}}.yml"
 
+- name: phpenv | Updating All Repositories
+  apt: update_cache=yes
+
 - name: phpenv | Install php-build dependencies (Debian)
   apt: pkg={{ item }} state=present install_recommends=no
   with_items: build_dependencies
